@@ -137,9 +137,9 @@
                 const accessToken = await generateAccessToken(user);
                 const refreshToken = await generateRefreshToken(user);
  
-                
 
 
+                req.headers.authorization  = accessToken
                 res.status(200).json(
                     {
                         status: true,

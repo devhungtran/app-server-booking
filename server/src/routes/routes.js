@@ -7,7 +7,7 @@ const { SignUp, SignIn } = require('../controller/AuthController');
 const { getAllBranch, createBranch } = require('../controller/BranchController');
 const { generateCodeDiscount } = require('../controller/CodeDiscountController');
 const { getAlllUser } = require('../controller/UserController');
-const { checkAdmin, checkAuthencationMDW, checkAuthenticationMDW } = require('../midlewares/checkAuthencation');
+const { checkAdmin, checkAuthenticationMDW } = require('../midlewares/checkAuthencation');
 const route = require('express').Router();
 
 
@@ -51,7 +51,7 @@ route.delete('/service/delete', deleteService)
 
 // người dùng
 
-route.get('/user/get-all' ,getAlllUser)
+route.get('/user/get-all' ,checkAuthenticationMDW, getAlllUser )
 
 
 

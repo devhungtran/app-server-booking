@@ -10,7 +10,6 @@ const getAlllUser = async (req,res) =>{
             message: "get all successsfully",
             data: allUser
         })
-        console.log(req.headers.authorization);
 
       
     } catch (error) {
