@@ -1,5 +1,9 @@
     const { UserModel } = require("../model/UserModel")
     const bcrypt  = require('bcryptjs')
+    const jwt = require('jsonwebtoken');
+
+
+    
     const { generateToken } = require("../services/generateToken")
 
 
@@ -122,16 +126,32 @@
                 return
             }
 
+
+
+            
+
             const passwordHash = user.password
             const isPassword = await bcrypt.compare(password, passwordHash);
             if(isPassword){
+                
+                const accessToken = await generateAccessToken(user);
+                const refreshToken = await generateRefreshToken(user);
+ 
+                
+
+
                 res.status(200).json(
                     {
                         status: true,
-                        message: "Đăng nhập thành công",
+                        message: "Đăng nhập thành công !!!",
+                        token: accessToken,
+                        data: user
                        
                     }
                 )   
+
+
+
             }else{
                 res.status(500).json(
                     {
@@ -147,6 +167,40 @@
             console.log(error);
         }
     }
+
+
+
+    const generateAccessToken = async (user) => {
+        try {
+            const key = process.env.ACCESS_TOKEN_SECRET;
+            const expiresIn = process.env.ACCESS_TOKEN_LIFE;
+            return jwt.sign({
+                username: user.username,
+                email: user.email,
+                role: user.role
+            }, key, { expiresIn: expiresIn });
+        } catch (error) {
+            // Handle error
+        }
+    }
+
+    const generateRefreshToken = async (user) =>{
+        try {
+            const key = process.env.ACCESS_TOKEN_SECRET
+            const expiresIn = process.env.ACCESS_TOKEN_LIFE
+            jwt.sign({
+                username: user.username,
+                emaiil  : user.email,
+                role: user.role
+                
+            },
+            {key, expiresIn: "100d"}
+            )
+        } catch (error) {
+            
+        }
+    }
+
 
 
 

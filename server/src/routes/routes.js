@@ -1,11 +1,13 @@
 const { models } = require('mongoose');
 const { GetAllProduct, GetProductByMaSP } = require('../controller/ProductController');
 const { ProductModel } = require('../model/ProductModel');
-const { getAllService, createService } = require('../controller/ServiceController');
+const { getAllService, createService, deleteService } = require('../controller/ServiceController');
 const { ServiceModel } = require('../model/ServiceModel');
 const { SignUp, SignIn } = require('../controller/AuthController');
 const { getAllBranch, createBranch } = require('../controller/BranchController');
 const { generateCodeDiscount } = require('../controller/CodeDiscountController');
+const { getAlllUser } = require('../controller/UserController');
+const { checkAdmin, checkAuthencationMDW, checkAuthenticationMDW } = require('../midlewares/checkAuthencation');
 const route = require('express').Router();
 
 
@@ -44,6 +46,13 @@ route.post('/branch/create', createBranch)
 // SERVICE
 route.get('/service/get-all', getAllService)
 route.post('/service/create', createService)
+route.delete('/service/delete', deleteService)
+
+
+// người dùng
+
+route.get('/user/get-all' ,getAlllUser)
+
 
 
 

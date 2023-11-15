@@ -40,6 +40,49 @@ const getAllService = async (req,res) =>{
 
 
 
+
+const deleteService =  async (req,res) =>{
+   
+    try {
+        const {code_service}  = req.body
+       
+        if(!code_service){
+            res.status(500).json(
+                {
+                    status: false,
+                    message: "Vui lòng nhập mã sản phẩnm"
+                }
+            )
+            return
+
+        }
+
+        const deleteService = await ServiceModel.deleteOne({
+            code_service: code_service
+        })
+
+        if(deleteService){
+            res.status(200).json(
+                {
+                    status: true,
+                    message: "Xóa sản phẩm thành công"
+                }
+            )
+        }
+        
+
+
+    } catch (error) {
+        
+    }
+}
+
+
+
+
+
+
+
 const createService =  async(req,res) =>{
     
     try {
@@ -53,7 +96,7 @@ const createService =  async(req,res) =>{
             res.status(500).json(
                 {
                     status: false,
-                    message: "Vui lòng nhập mã sản phẩn"
+                    message: "Vui lòng nhập mã sản phẩnm"
                 }
             )
             return
@@ -165,5 +208,6 @@ const createService =  async(req,res) =>{
 
 module.exports = {
     getAllService,
-    createService
+    createService,
+    deleteService
 }
