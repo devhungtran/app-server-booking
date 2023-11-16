@@ -13,7 +13,7 @@ const checkAuthenticationMDW = async (req, res, next) => {
     req.user = decoded;
     next();
 
-  } catch (error) {
+    } catch (error) {
         res.status(500).json({ message: 'Không tồn tại token' });
     }
 }
